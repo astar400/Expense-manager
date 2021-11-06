@@ -1,16 +1,42 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-class TransactionInput extends StatelessWidget {
+class TransactionInput extends StatefulWidget {
   TransactionInput({Key? key,required this.addtransaction}) : super(key: key);
-  String titleInput="";
-  String AmountInput="";
   late Function addtransaction;
-  TextEditingController titlecontroller=TextEditingController();
-  TextEditingController amountcontroller=TextEditingController();
-  void submit(){
 
-    addtransaction(titlecontroller.text,double.parse(amountcontroller.text));
+  @override
+  _TransactionInputState createState() => _TransactionInputState();
+}
+
+class _TransactionInputState extends State<TransactionInput> {
+  String titleInput="";
+
+  String AmountInput="";
+
+  TextEditingController titlecontroller=TextEditingController();
+
+  TextEditingController amountcontroller=TextEditingController();
+
+  void submit(){
+    String title =titlecontroller.text;
+    try{
+    double amt=double.parse(amountcontroller.text);
+    if(amt<=0||title.isEmpty){
+      print("empty check");
+      return;
+    }
+    widget.addtransaction(title,amt);
+    }
+
+    catch(e){
+      print(e.toString());
+
+
+    }
+
+
+
 
   }
 
@@ -25,7 +51,7 @@ class TransactionInput extends StatelessWidget {
           children: [
             TextField(
               controller: titlecontroller,
-              onChanged: (val){ titleInput=val;},
+              // onChanged: (val){ titleInput=val;},
               decoration: InputDecoration(
               labelText: "Title",
 
@@ -36,6 +62,7 @@ class TransactionInput extends StatelessWidget {
               keyboardType: TextInputType.numberWithOptions(decimal: true),
               onSubmitted: (_){
                 submit();
+                Navigator.of(context).pop();
 
               },
               decoration: InputDecoration(
@@ -48,6 +75,7 @@ class TransactionInput extends StatelessWidget {
               print(titleInput);
               print(amountcontroller.text);
               submit();
+              Navigator.of(context).pop();
 
 
             }, child: Text("Add Transaction",style: TextStyle(color: Colors.purpleAccent),))
