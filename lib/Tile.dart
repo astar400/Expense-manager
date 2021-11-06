@@ -17,9 +17,20 @@ class _TransactionListState extends State<TransactionList> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 300,
+      padding: EdgeInsets.all(20),
+      height: MediaQuery.of(context).size.height/1.5,
       // width: MediaQuery.of(context).size.width,
-      child: ListView.builder(
+      child:transactions.isEmpty?Column(
+        children: [
+          Container(
+              height: MediaQuery.of(context).size.height/2.0,
+
+              child: Image.asset("images/waiting.png",fit: BoxFit.cover,)),
+          SizedBox(height: 40,),
+          Text("No data Available \nPlease enter Data",style: Theme.of(context).textTheme.headline6,),
+
+        ],
+      ) :ListView.builder(
         itemCount: transactions.length,
         scrollDirection: Axis.vertical,
         itemBuilder: (ctx,index){return Tile(trxn: transactions[index]); },
@@ -60,7 +71,8 @@ class Tile extends StatelessWidget {
               children: [
                 Spacer(),
                 Text(trxn.title,
-                  style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),
+                  // style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),
+                  style: Theme.of(context).textTheme.headline6,
 
                 ),
                 Spacer(),

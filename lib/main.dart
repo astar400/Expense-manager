@@ -1,5 +1,6 @@
 
 
+import 'package:expenses_manager/chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -20,12 +21,22 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.purple,
         accentColor:Colors.amber ,
+        fontFamily: "QuickSand",
+        textTheme: ThemeData.light().textTheme.copyWith(headline6: TextStyle(fontFamily: "QuickSand",fontWeight: FontWeight.bold,fontSize: 18)),
+        appBarTheme: AppBarTheme(
+                textTheme: ThemeData.light().textTheme.copyWith(headline6:TextStyle(fontFamily:"OpenSans",fontSize: 20)  ),
+                titleTextStyle: TextStyle(fontFamily:"OpenSans"),
+                    )
 
       ),
       darkTheme: ThemeData(
         primarySwatch: Colors.yellow,
         backgroundColor: Colors.black,
         accentColor: Colors.purple,
+        fontFamily: "OpenSans",
+        appBarTheme: AppBarTheme(
+          titleTextStyle: TextStyle(fontFamily:"OpenSans"),
+        )
 
 
       ),
@@ -45,13 +56,18 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   List<Transaction> transactions=[
-    Transaction(uid:"1",date: DateTime.now(),transaction:12.9,title: "jbgjhghgh"),
-    Transaction(uid:"2",date: DateTime.now(),transaction:167.0,title: "hmm"),
-    Transaction(uid:"1",date: DateTime.now(),transaction:12.9,title: "jbgjhghgh"),
-    Transaction(uid:"2",date: DateTime.now(),transaction:167.0,title: "hmm"),
-    Transaction(uid:"1",date: DateTime.now(),transaction:12.9,title: "jbgjhghgh"),
-    Transaction(uid:"2",date: DateTime.now(),transaction:167.0,title: "hmm"),
+    // Transaction(uid:"1",date: DateTime.now(),transaction:12.9,title: "jbgjhghgh"),
+    // Transaction(uid:"2",date: DateTime.now(),transaction:167.0,title: "hmm"),
+    // Transaction(uid:"1",date: DateTime.now(),transaction:12.9,title: "jbgjhghgh"),
+    // Transaction(uid:"2",date: DateTime.now(),transaction:167.0,title: "hmm"),
+    // Transaction(uid:"1",date: DateTime.now(),transaction:12.9,title: "jbgjhghgh"),
+    // Transaction(uid:"2",date: DateTime.now(),transaction:167.0,title: "hmm"),
   ];
+  List<Transaction> get recent{
+    return transactions.where((element){
+      return (element.date.isAfter(DateTime.now().subtract(Duration(days: 7))));
+    }).toList();
+  }
 
   void _addNewTransaction(String title,double amount){
     final newtx=Transaction(uid: DateTime.now().toString(), date: DateTime.now(), transaction:amount,title: title);
@@ -83,11 +99,9 @@ class _MyHomePageState extends State<MyHomePage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                height: 100,
+
                 width: double.infinity,
-                child: Card(
-                  child:Text("Chart"),
-                ),
+                child: Chart(transactions: recent,)
               ),
               TransactionList(transactions: transactions),
                // Container(
