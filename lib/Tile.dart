@@ -20,18 +20,24 @@ class _TransactionListState extends State<TransactionList> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(20),
-      height: MediaQuery.of(context).size.height/1.5,
+      height: MediaQuery.of(context).size.height*0.55,
       // width: MediaQuery.of(context).size.width,
-      child:transactions.isEmpty?Column(
-        children: [
-          Container(
-              height: MediaQuery.of(context).size.height/2.0,
+      child:transactions.isEmpty?
+      LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          return  Column(
+            children: [
+              Container(
+                  height: constraints.maxHeight*0.5,
 
-              child: Image.asset("images/waiting.png",fit: BoxFit.cover,)),
-          SizedBox(height: 40,),
-          Text("No data Available \nPlease enter Data",style: Theme.of(context).textTheme.headline6,),
+                  child: Image.asset("images/waiting.png",fit: BoxFit.cover,)),
+              SizedBox(height: constraints.maxHeight*0.05,),
+              Text("No data Available \nPlease enter Data",style: Theme.of(context).textTheme.headline6,),
 
-        ],
+            ],
+          );
+        },
+
       ) :ListView.builder(
         itemCount: transactions.length,
         scrollDirection: Axis.vertical,

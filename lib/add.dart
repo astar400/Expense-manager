@@ -57,52 +57,62 @@ class _TransactionInputState extends State<TransactionInput> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return SingleChildScrollView(
+      child: Container(
+        height: MediaQuery.of(context).size.height*0.5,
+        child: Card(
 
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            TextField(
-              controller: titlecontroller,
-              // onChanged: (val){ titleInput=val;},
-              decoration: InputDecoration(
-              labelText: "Title",
-
-            ),),
-            TextField(
-              controller:amountcontroller,
-              onChanged: (val){ AmountInput=val;},
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
-              onSubmitted: (_){
-                // submit();
-                // Navigator.of(context).pop();
-
-              },
-              decoration: InputDecoration(
-
-              labelText: "Amount",
-
-            ),),
-            Container(
-              child: Row(
-                children:[Text(date==DateTime(1964)?"no Date Chosen":DateFormat.MMMMd().format(date)+" "+DateFormat.y().format(date) ),
-                TextButton(onPressed:showdate,
-                child: Text("choose date"),)]
-              ),
+          child: Padding(
+            padding: EdgeInsets.only(
+              left: 10,
+              right: 10,
+              top:10,
+              bottom:MediaQuery.of(context).padding.bottom+20,
             ),
-            FlatButton(onPressed: (){
-              print(AmountInput);
-              print(titleInput);
-              print(amountcontroller.text);
-              submit();
-              Navigator.of(context).pop();
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                TextField(
+                  controller: titlecontroller,
+                  // onChanged: (val){ titleInput=val;},
+                  decoration: InputDecoration(
+                  labelText: "Title",
+
+                ),),
+                TextField(
+                  controller:amountcontroller,
+                  onChanged: (val){ AmountInput=val;},
+                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  onSubmitted: (_){
+                    // submit();
+                    // Navigator.of(context).pop();
+
+                  },
+                  decoration: InputDecoration(
+
+                  labelText: "Amount",
+
+                ),),
+                Container(
+                  child: Row(
+                    children:[Text(date==DateTime(1964)?"no Date Chosen":DateFormat.MMMMd().format(date)+" "+DateFormat.y().format(date) ),
+                    TextButton(onPressed:showdate,
+                    child: Text("choose date"),)]
+                  ),
+                ),
+                FlatButton(onPressed: (){
+                  print(AmountInput);
+                  print(titleInput);
+                  print(amountcontroller.text);
+                  submit();
+                  Navigator.of(context).pop();
 
 
-            }, child: Text("Add Transaction",style: TextStyle(color: Colors.purpleAccent),))
+                }, child: Text("Add Transaction",style: TextStyle(color: Colors.purpleAccent),))
 
-          ],
+              ],
+            ),
+          ),
         ),
       ),
     );
