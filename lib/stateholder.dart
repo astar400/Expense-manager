@@ -30,7 +30,7 @@ class _HolderState extends State<Holder> {
     return Column(
       children: [
         TransactionInput(addtransaction: _addNewTransaction,),
-        TransactionList(transactions: transactions)
+        // TransactionList(transactions: transactions)
       ],
     );
   }

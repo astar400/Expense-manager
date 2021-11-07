@@ -25,6 +25,7 @@ class Bar extends StatelessWidget {
           Container(
             height: 50,
             width: 10,
+            // color: Colors.white,
             child: Stack(
               children: [
               Container(

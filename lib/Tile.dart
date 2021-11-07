@@ -5,15 +5,17 @@ import 'package:intl/intl.dart';
 
 class TransactionList extends StatefulWidget {
   List<Transaction> transactions;
-  TransactionList({Key? key,required this.transactions}) : super(key: key);
+  Function delete;
+  TransactionList({Key? key,required this.transactions,required this.delete}) : super(key: key);
 
   @override
-  _TransactionListState createState() => _TransactionListState(transactions: transactions);
+  _TransactionListState createState() => _TransactionListState(transactions: transactions,delete: delete);
 }
 
 class _TransactionListState extends State<TransactionList> {
   late List<Transaction> transactions;
-  _TransactionListState({required this.transactions});
+  Function delete;
+  _TransactionListState({required this.transactions,required this.delete});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,7 +35,7 @@ class _TransactionListState extends State<TransactionList> {
       ) :ListView.builder(
         itemCount: transactions.length,
         scrollDirection: Axis.vertical,
-        itemBuilder: (ctx,index){return Tile(trxn: transactions[index]); },
+        itemBuilder: (ctx,index){return Tile(trxn: transactions[index],delete:delete ,); },
         // children: transactions.map((trxn) => Tile(trxn: trxn,)).toList(),
       ),
     );
@@ -44,7 +46,8 @@ class _TransactionListState extends State<TransactionList> {
 
 class Tile extends StatelessWidget {
   Transaction trxn;
-  Tile({required this.trxn}) ;
+  Function delete;
+  Tile({required this.trxn, required this.delete}) ;
 
   @override
   Widget build(BuildContext context) {
@@ -82,6 +85,9 @@ class Tile extends StatelessWidget {
               ],
             ),
             Spacer(),
+            IconButton(onPressed: (){
+              delete(trxn.uid);
+            }, icon: Icon(Icons.delete))
           ],
         ),
 
